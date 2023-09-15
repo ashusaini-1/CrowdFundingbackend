@@ -25,16 +25,17 @@ const campaignSchema = new mongoose.Schema({
     enum: ['arts', 'technology', 'charity'], // Define allowed categories
     required: true,
   },
-  creator: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // Reference to the User model (assuming you have a User model)
-    required: true,
-  },
+  // creator: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'User', // Reference to the User model (assuming you have a User model)
+  //   required: true,
+  // },
   images: [
     {
       type: String, // Store image URLs
     },
   ],
+
   createdAt: {
     type: Date,
     default: Date.now,

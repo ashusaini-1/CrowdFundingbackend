@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
 
   contact: {
     type: Number,
-    required: [true, "Enter your Number"],
+    required: [true, "Enter your contact"],
     unique: true,
   },
   email: {
@@ -38,11 +38,18 @@ userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, 10);
 });
 
-userSchema.method.comparePassword = async function () {
+userSchema.methods.getJWTToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE,
   });
 };
+
+
+
+userSchema.methods.comparePassword = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
+
 
 userSchema.method.getResetPasswordToken = function () {
   const resetToken = crypto.randomBytes(20).toString("hex");

@@ -1,19 +1,15 @@
 const Campaign = require("../models/campaignModel");
 
 module.exports.createCampaign = async (req, res) => {
-  const { title, description, fundingGoal, endDate, category, images } =
-    req.body;
+  const { title, description, fundingGoal, endDate, category } = req.body;
 
-  const creator = req.user._id;
+  // const creator = req.user._id;
   const campaign = await Campaign.create({
-    creator,
     title,
     description,
     fundingGoal,
     endDate,
     category,
-
-    images,
   });
 
   res.status(200).json({
@@ -33,6 +29,25 @@ module.exports.updateCampaign = async (req, res) => {
 
   res.status(200).json({ campaign });
 };
+
+module.exports.allCamapign = async (req, res) => {
+  const campaign=await Campaign.find();
+  res.status(200).json({
+    success: true,
+    campaign
+  });
+};
+
+
+
+module.exports.singleCamapign = async (req, res) => {
+  const campaign=await Campaign.findById(req.params.id);
+  res.status(200).json({
+    success: true,
+    campaign
+  });
+};
+
 
 module.exports.deleteCamapign = async (req, res) => {
   await Campaign.findByIdAndDelete(req.params.id);
