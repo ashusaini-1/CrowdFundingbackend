@@ -2,7 +2,17 @@ const express = require("express");
 const app = express();
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
-const cors=require("cors");
+const cors=require('cors');
+
+app.use(express.json());
+const corsOptions = {
+    origin: 'https://crowd-funding-bp4h.onrender.com', 
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  };
+
+app.use(cors(corsOptions));
+
 
 app.use(express.json());
 app.use(cookieParser());
