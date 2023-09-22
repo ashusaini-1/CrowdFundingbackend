@@ -10,9 +10,16 @@ const userSchema = new mongoose.Schema({
   },
 
   contact: {
-    type: Number,
+    type: String,
     required: [true, "Enter your contact"],
     unique: true,
+    validate: {
+      validator: function (value) {
+        // Check if the value is a 10-digit number
+        return /^\d{10}$/.test(value.toString());
+      },
+      message: "Contact must be a 10-digit number",
+    },
   },
   email: {
     type: String,
@@ -23,6 +30,10 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, "Enter your Password"],
+  },
+  role: {
+    type: String,
+    default: "user",
   },
   createdAt: {
     type: Date,
@@ -44,12 +55,9 @@ userSchema.methods.getJWTToken = function () {
   });
 };
 
-
-
 userSchema.methods.comparePassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
-
 
 userSchema.method.getResetPasswordToken = function () {
   const resetToken = crypto.randomBytes(20).toString("hex");

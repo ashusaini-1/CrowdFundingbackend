@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 // Define the Campaign Schema
 const campaignSchema = new mongoose.Schema({
@@ -20,9 +20,12 @@ const campaignSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  pic: {
+    type: "String",
+  },
   category: {
     type: String,
-    enum: ['arts', 'technology', 'charity'], // Define allowed categories
+    enum: ["Arts", "Technology", "Charity"], // Define allowed categories
     required: true,
   },
   // creator: {
@@ -30,12 +33,6 @@ const campaignSchema = new mongoose.Schema({
   //   ref: 'User', // Reference to the User model (assuming you have a User model)
   //   required: true,
   // },
-  images: [
-    {
-      type: String, // Store image URLs
-    },
-  ],
-
   createdAt: {
     type: Date,
     default: Date.now,
@@ -43,6 +40,6 @@ const campaignSchema = new mongoose.Schema({
 });
 
 // Create the Campaign model
-const Campaign = mongoose.model('Campaign', campaignSchema);
+const Campaign = mongoose.model("Campaign", campaignSchema);
 
 module.exports = Campaign;
